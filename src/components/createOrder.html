@@ -1,0 +1,157 @@
+
+  <div>
+
+  	    
+        
+<!-- https://codepen.io/sarahspr/pen/jQVeZr -->
+    <!-- form -->
+    <main class ="content">
+    <form class="form">
+    <div class ="title">
+      <h2>Create Order</h2>
+        <p>Select locations and dates to get started.</p>
+    </div>
+    <div class="progress">
+      <p>Step 1 of 3</p>
+    <div class="progress-bar">
+      <div class="bar-pink">
+        <p>33%</p>
+      </div>
+     </div>
+    </div>
+    <div class ="categories">
+      <!-- <button class="flights button">Flights</button> -->
+      <!-- <button class="Hotels button">Hotels</button>
+      <button class ="Packages button">Packages</button> -->
+    </div>
+   <div class="row1">
+    <div class="locations from-location1">
+     <md-autocomplete @input="autocompleteCity" v-model="selectedCountryDeparture" :md-options="countriesDeparture">
+      <label>Departure</label>
+    </md-autocomplete>
+    </div>
+    <div class="locations to-location1">
+      <md-autocomplete @input="autocompleteCity" v-model="selectedCountryArrival" :md-options="countriesArrival">
+      <label>Arrival</label>
+    </md-autocomplete>
+    </div>
+  </div>
+    <div class="row2">
+      <div class="dates depart">
+        <label class="depart-date" for="depart">Departure:</label>
+        <md-datepicker v-model="selectedDateDeparture" />
+      </div>
+      <div class="dates return">
+        <label class="returning-date" for="return">Return:</label>
+        <md-datepicker v-model="selectedDateArrival" />   
+      </div>
+    </div>
+    <div class="">
+    <p v-mojs="mojsOptions" class="next" @click="letsFly()" >Let's Fly!</p>
+    <p v-mojs="mojsOptions" class="next" @click="getFLightPrice()" >Choose flight</p>
+      </div>
+    </form>
+    <template v-if="toggleInfo">
+    <form novalidate class="md-layout" @submit.prevent="validateUser">
+      <md-card class="content form">
+        <md-card-header>
+          <div class="md-title">Users</div>
+        </md-card-header>
+
+        <md-card-content>
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('firstName')">
+                <label for="first-name">First Name</label>
+                <md-input name="first-name" id="first-name" autocomplete="given-name" v-model="form.firstName" :disabled="sending" />
+                <!-- <span class="md-error" v-if="form.firstName.required">The first name is required</span>
+                <span class="md-error" v-else-if="form.firstName.minlength">Invalid first name</span> -->
+              </md-field>
+            </div>
+
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('lastName')">
+                <label for="last-name">Last Name</label>
+                <md-input name="last-name" id="last-name" autocomplete="family-name" v-model="form.lastName" :disabled="sending" />
+         <!--        <span class="md-error" v-if="form.lastName.required">The last name is required</span>
+                <span class="md-error" v-else-if="form.lastName.minlength">Invalid last name</span> -->
+              </md-field>
+            </div>
+          </div>
+
+          <div class="md-layout md-gutter">
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('gender')">
+                <label for="gender">Gender</label>
+                <md-select name="gender" id="gender" v-model="form.gender" md-dense :disabled="sending">
+                  <md-option></md-option>
+                  <md-option value="M">M</md-option>
+                  <md-option value="F">F</md-option>
+                </md-select>
+                <span class="md-error">The gender is required</span>
+              </md-field>
+            </div>
+
+            <div class="md-layout-item md-small-size-100">
+              <md-field :class="getValidationClass('age')">
+                <label for="age">Age</label>
+                <md-input type="number" id="age" name="age" autocomplete="age" v-model="form.age" :disabled="sending" />
+               <!--  <span class="md-error" v-if="form.age.required">The age is required</span>
+                <span class="md-error" v-else-if="form.age.maxlength">Invalid age</span> -->
+              </md-field>
+            </div>
+          </div>
+
+          <md-field :class="getValidationClass('email')">
+            <label for="email">Email</label>
+            <md-input type="email" name="email" id="email" autocomplete="email" v-model="form.email" :disabled="sending" />
+          <!--   <span class="md-error" v-if="form.email.required">The email is required</span>
+            <span class="md-error" v-else-if="form.email.email">Invalid email</span> -->
+          </md-field>
+        </md-card-content>
+
+        <md-progress-bar md-mode="indeterminate" v-if="sending" />
+
+        <md-card-actions>
+          <md-button v-mojs="mojsOptions" type="submit" class="md-primary" :disabled="sending">Create user</md-button>
+        </md-card-actions>
+      </md-card>
+
+      <!-- <md-snackbar :md-active.sync="userSaved">The user {{ lastUser }} was saved with success!</md-snackbar> -->
+    </form>
+    </template>
+  </main>
+       <div >
+       	<template v-if="toggleInfo2">
+       		<div v-for="item in info3.data.associatedRecords">
+       			<h1 v-mojs="mojsOptions">{{item.reference}}</h1>
+       		</div>
+       	</template>
+      <div class="row">
+    <div v-for="(item,index) in info2" :key="index" class="col s4 autoflow">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <template>
+          	<span  v-for="(foo, index) in item.itineraries" :key="index" class="card-title"> 
+
+          		<span v-for="bar in foo.segments">
+          			{{bar.departure.iataCode}}--{{bar.arrival.iataCode}}
+          		</span>
+          	</span>
+          </template>
+          
+          <p>Number of seat : {{item.numberOfBookableSeats}}-- Price :{{item.price.grandTotal}}</p>
+        </div>
+        <div class="card-action">
+   <!--        <a :href="item.links.flightDates">check offer</a>
+
+          <a :href="item.links.flightOffers">This is a link</a> -->
+          <md-checkbox v-mojs="mojsOptions" @click="getFLightPrice" v-model="selectedTravel" :value="item.id">{{item.id}}</md-checkbox>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+   
+  </div>
