@@ -2,7 +2,7 @@
   
 </template>
 <script>
-import searchTravel from './components/searchTravel.vue'
+// import searchTravel from './components/searchTravel.vue'
 import Loader from './components/loader.vue'
 
   /* eslint-disable no-mixed-spaces-and-tabs */
@@ -15,7 +15,7 @@ data: function(){
   name: 'app',
   menuVisible: false,
   components: {
-    searchTravel,
+    // searchTravel,
     Loader,
      isLoading: false,
   },

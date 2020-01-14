@@ -12,6 +12,9 @@ Vue.use(VueMaterial)
 import VueMoJS from 'vue-mo-js'
 Vue.use(VueMoJS)
 import VueRouter from 'vue-router'
+import {BadgerAccordion, BadgerAccordionItem} from 'vue-badger-accordion'
+Vue.component('BadgerAccordion', BadgerAccordion)
+Vue.component('BadgerAccordionItem', BadgerAccordionItem)
 
 Vue.use(VueRouter)
 import router from './router.js'

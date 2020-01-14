@@ -1,0 +1,13 @@
+import airport city search
+utilities + mern article
+use dictionaries to read iata code as city name 
+
+One single button for flight offer search +
+ 
+remove menu 
+
+translate duration into time ask Ana
+
+implement a button or clickable element box which trigger a modal with complement informations +book button
+
+add confirm travel page

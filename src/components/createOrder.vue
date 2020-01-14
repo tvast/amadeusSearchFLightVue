@@ -4,7 +4,7 @@
 <style  src="./style.css"></style>
 
 <script>
-import { VueContentLoading,VclFacebook, VclInstagram } from 'vue-content-loading';
+// import { VueContentLoading,VclFacebook, VclInstagram } from 'vue-content-loading';
 
 // Import component
     import Loading from 'vue-loading-overlay';
@@ -18,13 +18,20 @@ import { VueContentLoading,VclFacebook, VclInstagram } from 'vue-content-loading
     maxLength
   } from 'vuelidate/lib/validators'
 // import Form from "./Form.vue"
+
+import {BadgerAccordion, BadgerAccordionItem} from 'vue-badger-accordion'
 export default {
   name: 'searchPrice',
   data: () => ({
   toggleInfo:false,
   toggleInfo2:false,
   isLoading: false,
-  fullPage: true,
+    isOpen: true,
+  fullPage: true,  components: {
+        BadgerAccordion,
+        BadgerAccordionItem,
+        Loading
+    },
 
   form: {
   firstName: "theo",
@@ -36,13 +43,6 @@ export default {
   sending: false,
   lastUser: null,
   menuVisible: false,
-  components: {
-  VclFacebook,
-  VclInstagram,
-  VueContentLoading,
-  Loading
-
-  },
   selectedCountryDeparture: null,
   countriesDeparture: [
   'MAD',
@@ -57,7 +57,7 @@ export default {
   'SYD',
   'BKK',
   ],
-  localhost: "https://shielded-depths-64980.herokuapp.com/",
+  localhost: "http://localhost:3000/",
   info:{},
   info2:{},
   info3:{},
@@ -104,10 +104,15 @@ export default {
           required,
           email
         }}},
-computed : {
-            
-             
-},
+computed: {
+        accordionClasses: function() {
+            return {
+                'is-closed': !this.isOpen,
+                'is-primary': this.isOpen,
+                'is-dark': !this.isOpen
+            };
+        }
+    },
 
 watch:{
 			selectedTravel(){
@@ -136,6 +141,10 @@ methods: {
 		this.form.gender = null
 		this.form.email = null
 	},
+
+    toggleAccordion: function() {
+            this.isOpen = !this.isOpen;
+        },
 	// saveUser () {
 	// 	this.sending = true
 
@@ -269,7 +278,7 @@ postBody().then((data) => {
 
 async function CreateOrder() {
   // Default options are marked with *
-  this.isLoading = true
+  // this.isLoading = true
   const response = await fetch(vm.localhost+"flightcretaeorderget" );
   return await response.json(); // parses JSON response into native JavaScript objects
 }
@@ -277,7 +286,7 @@ CreateOrder()
   .then((json) => {
      this.info3=json;
   this.toggleInfo2=true;
-  this.isLoading = false   // JSON data parsed by `response.json()` call
+  // this.isLoading = false   // JSON data parsed by `response.json()` call
   })
 },
 
@@ -311,7 +320,7 @@ CreateOrder()
     referrerPolicy: 'no-referrer', // no-referrer, *client
     body: bodyDate// body data type must match "Content-Type" header
   });
-   this.isLoading = true
+   // this.isLoading = true
   return await response.json(); // parses JSON response into native JavaScript objects
 }
 
@@ -323,17 +332,20 @@ async function flightSearch() {
 
   // Default options are marked with *
   const response = await fetch(vm.localhost+"flightSearch" );
-  vm.isLoading = true
+  // vm.isLoading = true
   return await response.json(); // parses JSON response into native JavaScript objects
 }
 
 flightSearch()
   .then((json) => {
    this.info2=json;
+   window.console.log(json)
   this.toggleInfo=true;
-  this.isLoading = false
+  // this.isLoading = false
   // this.isLoading = false // JSON data parsed by `response.json()` call
-  });
+  }).catch(function(error) {
+  window.console.error(error);
+});
 },
 
 getFLightPrice () {
