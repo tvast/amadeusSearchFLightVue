@@ -4,22 +4,16 @@
 <style  src="./style.css"></style>
 
 <script>
-// import { VueContentLoading,VclFacebook, VclInstagram } from 'vue-content-loading';
 
-// Import component
-    import Loading from 'vue-loading-overlay';
-    // Import stylesheet
-    import 'vue-loading-overlay/dist/vue-loading.css';
-// import { validationMixin } from 'vuelidate'
   import {
     required,
     email,
     minLength,
     maxLength
   } from 'vuelidate/lib/validators'
-// import Form from "./Form.vue"
-
 import {BadgerAccordion, BadgerAccordionItem} from 'vue-badger-accordion'
+import { store } from '../store.js';
+import router from '../router.js'
 export default {
   name: 'searchPrice',
   data: () => ({
@@ -27,15 +21,17 @@ export default {
   toggleInfo2:false,
   isLoading: false,
     isOpen: true,
-  fullPage: true,  components: {
+  fullPage: true,
+  true:true,  
+  components: {
         BadgerAccordion,
         BadgerAccordionItem,
-        Loading
     },
 
   form: {
   firstName: "theo",
   lastName: "vast",
+  isModalVisible: false,
   gender: null,
   age: null,
   email: "abc@gmail.com",},
@@ -124,7 +120,9 @@ methods: {
 
 	autocompleteCity(){
 		window.console.log(this.selectedCountryDeparture+" "+this.selectedCountryArrival)
-	},  getValidationClass (fieldName) {
+	},changed: function(event) {
+      this.$store.commit('change', event.target.value)
+    },  getValidationClass (fieldName) {
 		const field = this.form[fieldName]
 
 		if (field) {
@@ -132,7 +130,12 @@ methods: {
 				'md-invalid': field.$invalid && field.$dirty
 			}
 		}
-	},
+	},   show () {
+    this.$modal.show('hello-world');
+  },
+  hide () {
+    this.$modal.hide('hello-world');
+  },
 	clearForm () {
 		this.$v.$reset()
 		this.form.firstName = null
@@ -157,6 +160,7 @@ methods: {
  //        }, 1500)
  //    },
     validateUser () {
+      store.commit('increment')
     //get info from flight
      window.console.log(this.selectedTravel)
 	
@@ -285,7 +289,9 @@ async function CreateOrder() {
 CreateOrder()
   .then((json) => {
      this.info3=json;
-  this.toggleInfo2=true;
+     this.$store.commit('change', json)
+     router.push('result')
+  // this.toggleInfo2=true;
   // this.isLoading = false   // JSON data parsed by `response.json()` call
   })
 },

@@ -1,0 +1,86 @@
+<div>
+	
+         
+     
+        <!-- <p>The safely stored number: {{$store.getters.flavor}}</p> -->
+        <span  v-for="(foo, index) in $store.getters.flavor.data.associatedRecords" :key="index" class="card-title"> 
+        	 <div >
+            <h1 v-mojs="mojsOptions">{{foo.reference}}</h1>
+          </div>
+       </span>
+<!--  <span v-for="bar in foo.segments">
+                {{bar.departure.iataCode}}--{{bar.arrival.iataCode}}
+              </span>
+            </span>
+          <p>Number of seat : {{item.numberOfBookableSeats}}-- Price :{{item.price.grandTotal}}</p>
+    </span> -->
+<div class="md-layout md-gutter">
+ 
+ <div class="md-layout-item"> </div>
+    <div class="md-layout-item">
+        <badger-accordion>
+    <badger-accordion-item v-for="(item,index) in $store.getters.flavor.data.flightOffers" :key="index">
+        <template slot="header" class="">
+
+      <md-card class="md-primary">
+      <md-card-header>
+        <md-card-header-text>
+          <div class="md-title"><span  v-for="(foo, index) in item.itineraries" :key="index" class="card-title"> 
+
+              <span v-for="bar in foo.segments">
+                {{bar.departure.iataCode}}--{{bar.arrival.iataCode}}
+              </span>
+            </span></div>
+          <div class="md-subhead"><p>Number of seat : {{item.numberOfBookableSeats}}-- Price :{{item.price.grandTotal}}</p></div>
+        </md-card-header-text>
+
+        
+      </md-card-header>
+
+      <md-card-actions>
+        <md-button class="md-raised">Open</md-button>
+        <!-- <md-button>Action</md-button> -->
+      </md-card-actions>
+    </md-card>
+
+  </template>    
+        <template slot="content" class="container">
+<md-card>
+      <md-card-media-cover md-solid>
+        <md-card-media md-ratio="16:9">
+          <img src="https://picsum.photos/id/1002/1600/900" alt="Skyscraper">
+        </md-card-media>
+
+        <md-card-area>
+          <md-card-header>
+            <span class="md-title"><span  v-for="(foo, index) in item.itineraries" :key="index" class="card-title "> 
+
+              <span v-for="bar in foo.segments">
+                {{bar.departure.iataCode}}--{{bar.arrival.iataCode}}
+              </span>
+            </span></span>
+            <span class="md-subhead"><p>Number of seat : {{item.numberOfBookableSeats}}-- Price :{{item.price.grandTotal}}</p></span>
+          </md-card-header>
+
+          <md-card-actions>
+            <md-button @click="show()" class="md-primary">Book flight</md-button>
+         <md-checkbox v-mojs="mojsOptions" @click="getFLightPrice" v-model="selectedTravel" :value="item.id">{{item.id}}</md-checkbox>
+
+            <!-- <md-button>Action</md-button> -->
+          </md-card-actions>
+        </md-card-area>
+      </md-card-media-cover>
+    </md-card>
+
+
+
+         </template>  
+    </badger-accordion-item>
+
+</badger-accordion>
+
+    </div>
+    <div class="md-layout-item"></div>
+  </div>
+             
+</div>

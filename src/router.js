@@ -11,6 +11,7 @@ import Router from 'vue-router'
 
 import createOrder from "@/components/createOrder.vue"
 import Intro from "@/components/intro.vue"
+import result from "@/components/result.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -25,11 +26,11 @@ export default new Router({
     //   name: 'foo',
     //   component: searchTravel
     // },
-    // {
-    //   path: '/bar',
-    //   name: 'bar',
-    //   component: searchPrice
-    // },
+    {
+      path: '/result',
+      name: 'result',
+      component: result
+    },
     {
       path: '/let',
       name: 'let',
