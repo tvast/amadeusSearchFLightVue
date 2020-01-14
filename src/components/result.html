@@ -56,15 +56,15 @@
             <span class="md-title"><span  v-for="(foo, index) in item.itineraries" :key="index" class="card-title "> 
 
               <span v-for="bar in foo.segments">
-                {{bar.departure.iataCode}}--{{bar.arrival.iataCode}}
+                <h4>{{bar.departure.iataCode}}--{{bar.arrival.iataCode}}</h4>
+                <h6>{{bar.departure.at}}--{{bar.arrival.at}}</h6>
               </span>
             </span></span>
-            <span class="md-subhead"><p>Number of seat : {{item.numberOfBookableSeats}}-- Price :{{item.price.grandTotal}}</p></span>
+            <span class="md-subhead"><p v-for="bagage in item.fareDetailsBySegment">Number of seat : {{bagage.includedCheckedBags}}-- --</p>Price :{{item.price.grandTotal}}</span>
           </md-card-header>
 
           <md-card-actions>
-            <md-button @click="show()" class="md-primary">Book flight</md-button>
-         <md-checkbox v-mojs="mojsOptions" @click="getFLightPrice" v-model="selectedTravel" :value="item.id">{{item.id}}</md-checkbox>
+            <router-link to="/"><md-button class="md-primary">return search</md-button></router-link>
 
             <!-- <md-button>Action</md-button> -->
           </md-card-actions>

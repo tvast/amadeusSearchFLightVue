@@ -61,7 +61,37 @@
         <router-link to="/let"><h1>Create orders</h1></router-link>
       </div>
     </a>
- --> <router-view></router-view>
+
+ --> 
+<!--  <img id="loading" src="https://i7.pngguru.com/preview/503/7/754/flight-attendant-air-travel-airplane-aviation-avion.jpg"> -->
+
+<div id="loading" class="loading">
+  <div class="finger finger-1">
+    <div class="finger-item">
+      <span></span><i></i>
+    </div>
+  </div>
+        <div class="finger finger-2">
+    <div class="finger-item">
+      <span></span><i></i>
+    </div>
+  </div>
+        <div class="finger finger-3">
+    <div class="finger-item">
+      <span></span><i></i>
+    </div>
+  </div>
+        <div class="finger finger-4">
+    <div class="finger-item">
+      <span></span><i></i>
+    </div>
+  </div>
+        <div class="last-finger">
+    <div class="last-finger-item"><i></i></div>
+  </div>
+    </div>
+
+ <router-view></router-view>
 
    <div v-if="isVisible" class="loader-overlay">
         <div class="loader"></div>

@@ -44,7 +44,7 @@ Vue.mixin({
   },/* eslint-disable no-mixed-spaces-and-tabs */
   methods: {
     showLoader: bool => {
-      document.getElementById("loader").style.display = bool ? "block" : "none";
+      document.getElementById("loading").style.display = bool ? "block" : "none";
     },
 
     

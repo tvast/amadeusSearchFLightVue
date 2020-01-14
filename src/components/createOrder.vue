@@ -1,7 +1,7 @@
 <template src="./createOrder.html"></template>
 
 
-<style  src="./style.css"></style>
+<style src="./style.css"></style>
 
 <script>
 
@@ -160,6 +160,7 @@ methods: {
  //        }, 1500)
  //    },
     validateUser () {
+      this.showLoader(true)
       store.commit('increment')
     //get info from flight
      window.console.log(this.selectedTravel)
@@ -291,12 +292,14 @@ CreateOrder()
      this.info3=json;
      this.$store.commit('change', json)
      router.push('result')
+     this.showLoader(false)
   // this.toggleInfo2=true;
   // this.isLoading = false   // JSON data parsed by `response.json()` call
   })
 },
 
   letsFly() {
+    this.showLoader(true)
     var vm =this;
   this.info2="";
   let bodyDate = "departure="+
@@ -347,6 +350,7 @@ flightSearch()
    this.info2=json;
    window.console.log(json)
   this.toggleInfo=true;
+  this.showLoader(false)
   // this.isLoading = false
   // this.isLoading = false // JSON data parsed by `response.json()` call
   }).catch(function(error) {
