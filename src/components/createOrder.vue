@@ -22,6 +22,7 @@ export default {
   isLoading: false,
     isOpen: true,
   fullPage: true,
+  flightConfirmation :"",
   true:true,  
   vm:this,
   components: {
@@ -41,6 +42,41 @@ export default {
   lastUser: null,
   menuVisible: false,
   selectedCountryDeparture: null,
+  countryList: [
+        {
+          id: 1,
+          name: 'Algeria'
+        },
+        {
+          id: 2,
+          name: 'Argentina'
+        },
+        {
+          id: 3,
+          name: 'Brazil'
+        },
+        {
+          id: 4,
+          name: 'Canada'
+        },
+        {
+          id: 5,
+          name: 'Italy'
+        },
+        {
+          id: 6,
+          name: 'Japan'
+        },
+        {
+          id: 7,
+          name: 'United Kingdom'
+        },
+        {
+          id: 8,
+          name: 'United States'
+        }
+      ],
+      countries: [],
   countriesDeparture: [
   'MAD',
   'PAR',
@@ -114,14 +150,78 @@ computed: {
 watch:{
 			selectedTravel(){
 				// alert('checkbox changed');
-				return window.console.log(this.selectedTravel);}
+				return window.console.log(this.selectedTravel);},
+      
 			},
 
 methods: {
 
 	autocompleteCity(){
 		window.console.log(this.selectedCountryDeparture+" "+this.selectedCountryArrival)
-	},changed: function(event) {
+	},getCountries (searchTerm) {
+        this.countries = new Promise(resolve => {
+          window.setTimeout(() => {
+            if (!searchTerm) {
+              resolve(this.countryList)
+            } else {
+              const term = searchTerm.toLowerCase()
+
+              resolve(this.countryList.filter(({ name }) => name.toLowerCase().includes(term)))
+            }
+          }, 500)
+        })
+      },searchCity() {
+          this.showLoader(true)
+    var vm =this;
+  var urlSend= "keyword="+this.selectedCountryDeparture
+  
+  window.console.log(urlSend);
+ 
+  async function postUrlEncoded() {
+  // Default options are marked with *
+ 
+  const response = await fetch("http://localhost:3000/citySearch?", {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      // 'Content-Type': 'application/json'   
+      'Content-Type': 'application/x-www-form-urlencoded',
+     },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *client
+    body: urlSend// body data type must match "Content-Type" header
+  });
+   // this.isLoading = true
+  return await response.json(); // parses JSON response into native JavaScript objects
+}
+
+postUrlEncoded().then((data) => {
+    window.console.log(data);
+    // this.info3=data // JSON data parsed by `response.json()` call
+  });
+async function departureGet() {
+
+  // Default options are marked with *
+  const response = await fetch(vm.localhost+"departureGet" );
+  // vm.isLoading = true
+  return await response.json(); // parses JSON response into native JavaScript objects
+}
+
+departureGet()
+  .then((json) => {
+    this.countryList=json.data;
+   // this.info2=json;
+   // window.console.log(json)
+  // this.toggleInfo=true;
+  this.showLoader(false)
+  // this.isLoading = false
+  // this.isLoading = false // JSON data parsed by `response.json()` call
+  }).catch(function(error) {
+  window.console.error(error);
+});
+      },changed: function(event) {
       this.$store.commit('change', event.target.value)
     },  getValidationClass (fieldName) {
 		const field = this.form[fieldName]
@@ -161,21 +261,30 @@ methods: {
  //        }, 1500)
  //    },
  getFLightPrice () {
- window.console.log(this.selectedTravel)
+ // window.console.log(this.selectedTravel)
   
  var vm=this;
 function isCherries(flight) { 
   return flight.id === vm.selectedTravel;
 }
 this.searchObject = this.info2.find(isCherries);
-
+this.$store.commit('changePricing', this.searchObject);
 window.console.log(this.searchObject); 
 
 this.info3="";
+  // var duh=this;\
 
+  var duh=   {
+    "data": {
+        "type": "flight-offers-pricing",
+        "flightOffers": [this.searchObject]
+  }};
   async function postSearchPrice() {
   // Default options are marked with *
+  
   const response = await fetch(vm.localhost+"flightprice", {
+
+
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -183,7 +292,7 @@ this.info3="";
     headers: {'Content-Type': 'application/json'},
     redirect: 'follow', // manual, *follow, error
     referrerPolicy: 'no-referrer', // no-referrer, *client
-    body: JSON.stringify(this.searchObject)// body data type must match "Content-Type" header
+    body: JSON.stringify(duh)// body data type must match "Content-Type" header
   });
   return await response.json(); // parses JSON response into native JavaScript objects
 }
@@ -193,14 +302,18 @@ postSearchPrice().then((data) => {
     async function fligthConfirmationGet() {
   // Default options are marked with *
   const response = await fetch(vm.localhost+"flightPriceget" );
-  return await response.json(); // parses JSON response into native JavaScript objects
+  return await response.json();
+  //this.$store.commit('changePricing', response); // parses JSON response into native JavaScript objects
 }
 this.isLoading = true
 fligthConfirmationGet()
   .then((json) => {
    window.console.log(json);
+   this.flightConfirmation = "PriceConfirmed";
   this.info3=json;
-  this.$store.commit('changePricing', json);
+  // this.$store.commit('changePricing', json.data.flightOffers);
+  this.isLoading = false
+  this.validateUser ()
   // this.isLoading = false // JSON data parsed by `response.json()` call
   });
     // this.info3=data // JSON data parsed by `response.json()` call
@@ -209,7 +322,7 @@ fligthConfirmationGet()
 },
     validateUser () {
       this.showLoader(true)
-      // store.commit('increment')
+      //  store.commit('increment')
     //get info from flight
      window.console.log(this.selectedTravel)
 	
@@ -230,7 +343,7 @@ fligthConfirmationGet()
     var requestCreateOrder={
   "data": {
     "type": "flight-order",
-    "flightOffers": [this.searchObject],
+    "flightOffers": [this.$store.getters.pricing],
     "travelers": [
       {
         "id": "1",
@@ -315,8 +428,8 @@ fligthConfirmationGet()
 
 async function postBody() {
   // Default options are marked with *
-  const vm=this;
-  const response = await fetch(vm.localhost+"flightCreateOrder", {
+  // const foo=this;
+  const response = await fetch("http://localhost:3000/"+"flightCreateOrder", {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -337,8 +450,8 @@ postBody().then((data) => {
 async function CreateOrder() {
   // Default options are marked with *
   // this.isLoading = true
-  const vm=this;
-  const response = await fetch(vm.localhost+"flightcretaeorderget" );
+  // const bar=this;
+  const response = await fetch("http://localhost:3000/"+"flightcretaeorderget" );
   return await response.json(); // parses JSON response into native JavaScript objects
 }
 CreateOrder()

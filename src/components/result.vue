@@ -176,6 +176,7 @@ import {BadgerAccordion, BadgerAccordionItem} from 'vue-badger-accordion'
 export default {
 data: function(){
     return {
+    	pricingConfirmation:"Thank you your order is confirmed",
       MojsOptions : {
             count : 6,
             radius: { 15: 100 },
@@ -191,6 +192,7 @@ data: function(){
             }
           },
     }
+
   },
   name: 'app',
   menuVisible: false,

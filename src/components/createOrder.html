@@ -66,7 +66,7 @@
         <md-progress-bar md-mode="indeterminate" v-if="sending" />
 
         <md-card-actions>
-          <md-button v-mojs="mojsOptions" @click="validateUser()"type="submit" class="md-primary" :disabled="sending">Create user</md-button>
+          <md-button v-mojs="mojsOptions" @click="getFLightPrice()" class="md-primary">Create user</md-button>
         </md-card-actions>
       </md-card>
 
@@ -97,13 +97,19 @@
     </div>
    <div class="row1">
     <div class="locations from-location1">
-     <md-autocomplete @input="autocompleteCity" v-model="selectedCountryDeparture" :md-options="countriesDeparture">
+     <md-autocomplete @input="searchCity()" v-model="selectedCountryDeparture" :md-options="countriesDeparture">
       <label>Departure</label>
+      <!-- <template slot="md-autocomplete-item" slot-scope="{ countriesDeparture }">{{ countriesDeparture.name }}</template> -->
     </md-autocomplete>
     </div>
     <div class="locations to-location1">
-      <md-autocomplete @input="autocompleteCity" v-model="selectedCountryArrival" :md-options="countriesArrival">
+      <md-autocomplete @input="searchCity()" v-model="selectedCountryArrival" :md-options="countriesArrival">
       <label>Arrival</label>
+    </md-autocomplete>
+    <md-autocomplete @input="searchCity()" v-model="selectedCountryDeparture" :md-options="countries" @md-changed="getCountries" @md-opened="getCountries">
+      <label>Country</label>
+
+      <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item.name }}</template>
     </md-autocomplete>
     </div>
   </div>
@@ -127,11 +133,7 @@
         </template>
   </main>
 <div class="md-layout md-gutter">
-    <div class="md-layout-item">  <template v-if="toggleInfo2">
-          <div v-for="item in info3.data.associatedRecords">
-            <h1 v-mojs="mojsOptions">{{item.reference}}</h1>
-          </div>
-        </template></div>
+    <div class="md-layout-item"> {{flightConfirmation}}</div>
     <div class="md-layout-item">
         <badger-accordion>
     <badger-accordion-item v-for="(item,index) in info2" :key="index">
