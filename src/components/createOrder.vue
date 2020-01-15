@@ -12,7 +12,7 @@
     maxLength
   } from 'vuelidate/lib/validators'
 import {BadgerAccordion, BadgerAccordionItem} from 'vue-badger-accordion'
-import { store } from '../store.js';
+// import { store } from '../store.js';
 import router from '../router.js'
 export default {
   name: 'searchPrice',
@@ -23,6 +23,7 @@ export default {
     isOpen: true,
   fullPage: true,
   true:true,  
+  vm:this,
   components: {
         BadgerAccordion,
         BadgerAccordionItem,
@@ -159,9 +160,56 @@ methods: {
  //        this.clearForm()
  //        }, 1500)
  //    },
+ getFLightPrice () {
+ window.console.log(this.selectedTravel)
+  
+ var vm=this;
+function isCherries(flight) { 
+  return flight.id === vm.selectedTravel;
+}
+this.searchObject = this.info2.find(isCherries);
+
+window.console.log(this.searchObject); 
+
+this.info3="";
+
+  async function postSearchPrice() {
+  // Default options are marked with *
+  const response = await fetch(vm.localhost+"flightprice", {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {'Content-Type': 'application/json'},
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *client
+    body: JSON.stringify(this.searchObject)// body data type must match "Content-Type" header
+  });
+  return await response.json(); // parses JSON response into native JavaScript objects
+}
+
+postSearchPrice().then((data) => {
+    window.console.log(data);
+    async function fligthConfirmationGet() {
+  // Default options are marked with *
+  const response = await fetch(vm.localhost+"flightPriceget" );
+  return await response.json(); // parses JSON response into native JavaScript objects
+}
+this.isLoading = true
+fligthConfirmationGet()
+  .then((json) => {
+   window.console.log(json);
+  this.info3=json;
+  this.$store.commit('changePricing', json);
+  // this.isLoading = false // JSON data parsed by `response.json()` call
+  });
+    // this.info3=data // JSON data parsed by `response.json()` call
+  });
+
+},
     validateUser () {
       this.showLoader(true)
-      store.commit('increment')
+      // store.commit('increment')
     //get info from flight
      window.console.log(this.selectedTravel)
 	
@@ -172,6 +220,10 @@ methods: {
 	}
 	this.searchObject = this.info2.find(isCherries);
 	window.console.log(this.searchObject);
+
+  // this.getFLightPrice()
+    // this.info3=data // JSON data parsed by `response.json()` call
+ 
     //get user info
 
     //generate request
@@ -263,6 +315,7 @@ methods: {
 
 async function postBody() {
   // Default options are marked with *
+  const vm=this;
   const response = await fetch(vm.localhost+"flightCreateOrder", {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -284,6 +337,7 @@ postBody().then((data) => {
 async function CreateOrder() {
   // Default options are marked with *
   // this.isLoading = true
+  const vm=this;
   const response = await fetch(vm.localhost+"flightcretaeorderget" );
   return await response.json(); // parses JSON response into native JavaScript objects
 }
@@ -356,54 +410,7 @@ flightSearch()
   }).catch(function(error) {
   window.console.error(error);
 });
-},
-
-getFLightPrice () {
- window.console.log(this.selectedTravel)
-	
- var vm=this;
-function isCherries(flight) { 
-  return flight.id === vm.selectedTravel;
 }
-this.searchObject = this.info2.find(isCherries);
-
-window.console.log(this.searchObject); 
-
-this.info3="";
-
-  async function postSearchPrice() {
-  // Default options are marked with *
-  const response = await fetch(vm.localhost+"flightprice", {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {'Content-Type': 'application/json'},
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *client
-    body: JSON.stringify(this.searchObject)// body data type must match "Content-Type" header
-  });
-  return await response.json(); // parses JSON response into native JavaScript objects
-}
-
-postSearchPrice().then((data) => {
-    window.console.log(data);
-    async function fligthConfirmationGet() {
-  // Default options are marked with *
-  const response = await fetch(vm.localhost+"flightPriceget" );
-  return await response.json(); // parses JSON response into native JavaScript objects
-}
-this.isLoading = true
-fligthConfirmationGet()
-  .then((json) => {
-   window.console.log(json);
-  this.info3=json;
-  // this.isLoading = false // JSON data parsed by `response.json()` call
-  });
-    // this.info3=data // JSON data parsed by `response.json()` call
-  });
-
-},
 }
 
 

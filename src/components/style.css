@@ -10,9 +10,10 @@
   }*/
 #loading {
     -webkit-animation: rotation 2s infinite linear;
-    display: none
+    display: none;
+    z-index: 1000;
 }
-
+/*https://codepen.io/r4ms3s/pen/XJqeKB*/
 /* INSPIRATION: http://drbl.in/1945392 */
 @font-face {
   font-family: 'Open Sans';

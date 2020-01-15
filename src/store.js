@@ -8,14 +8,21 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
 
 	state: {
-    flavor: ''
+    flavor: '',
+    pricing :''
   },
   mutations: {
     change(state, flavor) {
       state.flavor = flavor
     }
+    ,
+    changePricing (state, pricing) {
+    state.pricing = pricing
+    }
   },
   getters: {
-    flavor: state => state.flavor
+    flavor: state => state.flavor,
+    pricing: state => state.pricing,
+
   }
 })
