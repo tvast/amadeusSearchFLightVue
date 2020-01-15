@@ -220,7 +220,7 @@ departureGet()
   // this.isLoading = false // JSON data parsed by `response.json()` call
   }).catch(function(error) {
   window.console.error(error);
-});
+}).then();
       },changed: function(event) {
       this.$store.commit('change', event.target.value)
     },  getValidationClass (fieldName) {
