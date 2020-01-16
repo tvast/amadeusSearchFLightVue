@@ -4,7 +4,7 @@
   	     
 
 
-        <modal height="430" width="430" :adaptive="true" :resizable="true" name="hello-world">
+        <modal height="530" width="530" :adaptive="true" :resizable="true" name="hello-world">
   <form novalidate class="md-layout" @submit.prevent="validateUser">
       <md-card class="">
         <md-card-header>
@@ -102,10 +102,10 @@
       <template slot="md-autocomplete-item" slot-scope="{ countriesDeparture }">{{ countriesDeparture.name }}</template>
       <template slot="md-autocomplete-item" slot-scope="{ item, term }">{{ item.name }}</template>
     </md-autocomplete> -->
-    <md-autocomplete @input="searchCity()" v-model="selectedCountryDeparture" :md-options="countries" @md-changed="getCountriesDeparture" @md-selected="getSeletedItem()">
+    <md-autocomplete @input="searchCity()" v-model="selectedCountryDeparture" :md-options="$store.getters.dataCitySearch" @md-changed="getCountriesDeparture" @md-selected="getSeletedItem()">
       <label>Country</label>
 
-      <template slot="md-autocomplete-item" slot-scope="{ item, term }"> {{item.name}} </template>
+      <template slot="md-autocomplete-item" slot-scope="{ item, term }"> {{item.name}}--{{item.id}} </template>
     </md-autocomplete>
     
     </div>

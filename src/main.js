@@ -14,6 +14,24 @@ Vue.use(VueMoJS)
 
 import VueRouter from 'vue-router'
 
+// import socketio from 'socket.io';
+import VueSocketIO from 'vue-socket.io';
+
+// export const SocketInstance = socketio('http://localhost:3000');
+
+// Vue.use(new VueSocketIO({
+//     debug: true,
+//     connection: SocketIO('http://localhost:3000'), //options object is Optional
+//     vuex: {
+//       store,
+//       actionPrefix: "SOCKET_",
+//       mutationPrefix: "SOCKET_"
+//     }
+//   })
+// );
+
+
+
 import {BadgerAccordion, BadgerAccordionItem} from 'vue-badger-accordion'
 Vue.component('BadgerAccordion', BadgerAccordion)
 Vue.component('BadgerAccordionItem', BadgerAccordionItem)
@@ -38,6 +56,16 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 import { store } from './store.js';
 
+Vue.use(new VueSocketIO({
+    debug: true,
+    connection: 'http://localhost:3000',
+    vuex: {
+        store,
+        actionPrefix: 'SOCKET_',
+        mutationPrefix: 'SOCKET_'
+    },
+    //options: { path: "/my-app/" } //Optional options
+}))
 Vue.config.productionTip = false
 Vue.mixin({
   data: function(){

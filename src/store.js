@@ -2,14 +2,17 @@
 // Make sure to call Vue.use(Vuex) first if using a module system
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import Axios from 'axios'
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
 
 	state: {
     flavor: '',
-    pricing :''
+    pricing :'',
+    chats : null,
+    handle : "",
+    dataCitySearch:[]
   },
   mutations: {
     change(state, flavor) {
@@ -18,11 +21,45 @@ export const store = new Vuex.Store({
     ,
     changePricing (state, pricing) {
     state.pricing = pricing
+    },
+        SET_CHAT : (state,payload) => {
+      state.chats = payload;
+    },
+    ADD_CHAT : (state,payload) => {
+      state.chats.push(payload);
+    },
+    SET_HANDLE : (state,payload) => {
+      state.handle = payload;
+    },
+    dataCitySearchMute (state, dataCitySearch){
+      state.dataCitySearch=dataCitySearch
     }
   },
   getters: {
     flavor: state => state.flavor,
     pricing: state => state.pricing,
+     CHATS : state => {
+      return state.chats
+    },
+    HANDLE : state => {
+      return state.handle
+    },
+    dataCitySearch : state => {
+      return state.dataCitySearch
+    }
 
-  }
+  },
+   actions : {
+    SET_CHAT : async (context) => {
+      let {data} = await Axios.get('http://localhost:3000/chat');
+      window.console.log(data);
+      context.commit("SET_CHAT",data);
+    },
+    ADD_CHAT : (context)=> {
+      context.commit("ADD_CHAT");
+    },
+    SET_HANDLE : (context)=> {
+      context.commit("SET_HANDLE");
+    }
+  },
 })

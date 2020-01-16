@@ -212,9 +212,10 @@ async function departureGet() {
   return await response.json(); // parses JSON response into native JavaScript objects
 }
 
-departureGet()
+setTimeout(() => departureGet()
   .then((json) => {
     this.countryList=json.data;
+    this.$store.commit('dataCitySearchMute', json.data)
    // this.info2=json;
    window.console.log(json.data)
   // this.toggleInfo=true;
@@ -223,7 +224,7 @@ departureGet()
   // this.isLoading = false // JSON data parsed by `response.json()` call
   }).catch(function(error) {
   window.console.error(error);
-}).then();
+}), 500); 
       },changed: function(event) {
       this.$store.commit('change', event.target.value)
     },  getValidationClass (fieldName) {
@@ -457,7 +458,8 @@ async function CreateOrder() {
   const response = await fetch("http://localhost:3000/"+"flightcretaeorderget" );
   return await response.json(); // parses JSON response into native JavaScript objects
 }
-CreateOrder()
+
+setTimeout(() => CreateOrder()
   .then((json) => {
      this.info3=json;
      this.$store.commit('change', json)
@@ -465,7 +467,18 @@ CreateOrder()
      this.showLoader(false)
   // this.toggleInfo2=true;
   // this.isLoading = false   // JSON data parsed by `response.json()` call
-  })
+  }), 4000);
+
+
+// CreateOrder()
+//   .then((json) => {
+//      this.info3=json;
+//      this.$store.commit('change', json)
+//      router.push('result')
+//      this.showLoader(false)
+//   // this.toggleInfo2=true;
+//   // this.isLoading = false   // JSON data parsed by `response.json()` call
+//   })
 },
 
   letsFly() {
@@ -502,7 +515,7 @@ CreateOrder()
    // this.isLoading = true
   return await response.json(); // parses JSON response into native JavaScript objects
 }
-this.showLoader(false)
+// this.showLoader(false)
 postUrlEncoded().then((data) => {
     window.console.log(data);
     // this.info3=data // JSON data parsed by `response.json()` call
@@ -512,21 +525,22 @@ async function flightSearch() {
   // Default options are marked with *
   const response = await fetch(vm.localhost+"flightSearch" );
   // vm.isLoading = true
-  window.console.log(response)
   return await response.json(); // parses JSON response into native JavaScript objects
 }
-// this.showLoader(true)
-flightSearch()
+
+setTimeout(() => flightSearch()
   .then((json) => {
    this.info2=json;
    window.console.log(json)
   this.toggleInfo=true;
-  // this.showLoader(false)
+  this.showLoader(false)
   // this.isLoading = false
   // this.isLoading = false // JSON data parsed by `response.json()` call
   }).catch(function(error) {
   window.console.error(error);
-});
+}), 8000);
+
+
 }
 }
 

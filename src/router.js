@@ -12,6 +12,7 @@ import Router from 'vue-router'
 import createOrder from "@/components/createOrder.vue"
 import Intro from "@/components/intro.vue"
 import result from "@/components/result.vue"
+import socket from "@/components/ilistentosoccet.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -21,11 +22,11 @@ export default new Router({
       name: '',
       component: createOrder
     },
-    // ,{
-    //   path: '/foo',
-    //   name: 'foo',
-    //   component: searchTravel
-    // },
+    {
+      path: '/socket',
+      name: 'foo',
+      component: socket
+    },
     {
       path: '/result',
       name: 'result',
