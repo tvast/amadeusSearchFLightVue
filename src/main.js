@@ -18,6 +18,11 @@ import {BadgerAccordion, BadgerAccordionItem} from 'vue-badger-accordion'
 Vue.component('BadgerAccordion', BadgerAccordion)
 Vue.component('BadgerAccordionItem', BadgerAccordionItem)
 
+import Autocomplete from '@trevoreyre/autocomplete-vue'
+import '@trevoreyre/autocomplete-vue/dist/style.css'
+
+Vue.use(Autocomplete)
+
 import vmodal from 'vue-js-modal'
 import VModal from 'vue-js-modal'
 Vue.use(vmodal)

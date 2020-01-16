@@ -41,41 +41,41 @@ export default {
   sending: false,
   lastUser: null,
   menuVisible: false,
-  selectedCountryDeparture: null,
-  countryList: [
-        {
-          id: 1,
-          name: 'Algeria'
-        },
-        {
-          id: 2,
-          name: 'Argentina'
-        },
-        {
-          id: 3,
-          name: 'Brazil'
-        },
-        {
-          id: 4,
-          name: 'Canada'
-        },
-        {
-          id: 5,
-          name: 'Italy'
-        },
-        {
-          id: 6,
-          name: 'Japan'
-        },
-        {
-          id: 7,
-          name: 'United Kingdom'
-        },
-        {
-          id: 8,
-          name: 'United States'
-        }
-      ],
+  selectedCountryDeparture: "",
+  // countryList: [
+  //       {
+  //         id: 1,
+  //         name: 'Algeria'
+  //       },
+  //       {
+  //         id: 2,
+  //         name: 'Argentina'
+  //       },
+  //       {
+  //         id: 3,
+  //         name: 'Brazil'
+  //       },
+  //       {
+  //         id: 4,
+  //         name: 'Canada'
+  //       },
+  //       {
+  //         id: 5,
+  //         name: 'Italy'
+  //       },
+  //       {
+  //         id: 6,
+  //         name: 'Japan'
+  //       },
+  //       {
+  //         id: 7,
+  //         name: 'United Kingdom'
+  //       },
+  //       {
+  //         id: 8,
+  //         name: 'United States'
+  //       }
+  //     ],
       countries: [],
   countriesDeparture: [
   'MAD',
@@ -158,7 +158,10 @@ methods: {
 
 	autocompleteCity(){
 		window.console.log(this.selectedCountryDeparture+" "+this.selectedCountryArrival)
-	},getCountries (searchTerm) {
+	},getSeletedItem(){
+    this.selectedCountryDeparture = this.selectedCountryDeparture.iataCode
+  },
+  getCountriesDeparture (searchTerm) {
         this.countries = new Promise(resolve => {
           window.setTimeout(() => {
             if (!searchTerm) {
@@ -213,7 +216,7 @@ departureGet()
   .then((json) => {
     this.countryList=json.data;
    // this.info2=json;
-   // window.console.log(json)
+   window.console.log(json.data)
   // this.toggleInfo=true;
   this.showLoader(false)
   // this.isLoading = false
@@ -499,7 +502,7 @@ CreateOrder()
    // this.isLoading = true
   return await response.json(); // parses JSON response into native JavaScript objects
 }
-
+this.showLoader(false)
 postUrlEncoded().then((data) => {
     window.console.log(data);
     // this.info3=data // JSON data parsed by `response.json()` call
@@ -509,15 +512,16 @@ async function flightSearch() {
   // Default options are marked with *
   const response = await fetch(vm.localhost+"flightSearch" );
   // vm.isLoading = true
+  window.console.log(response)
   return await response.json(); // parses JSON response into native JavaScript objects
 }
-
+// this.showLoader(true)
 flightSearch()
   .then((json) => {
    this.info2=json;
    window.console.log(json)
   this.toggleInfo=true;
-  this.showLoader(false)
+  // this.showLoader(false)
   // this.isLoading = false
   // this.isLoading = false // JSON data parsed by `response.json()` call
   }).catch(function(error) {
