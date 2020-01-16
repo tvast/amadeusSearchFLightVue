@@ -4,7 +4,9 @@
 <style src="./style.css"></style>
 
 <script>
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
+import 'sweetalert2/src/sweetalert2.scss'
   import {
     required,
     email,
@@ -238,6 +240,12 @@ setTimeout(() => departureGet()
   // this.isLoading = false
   // this.isLoading = false // JSON data parsed by `response.json()` call
   }).catch(function(error) {
+    Swal.fire({
+  title: 'Error!',
+  text: 'Do you want to continue'+error,
+  icon: 'error',
+  confirmButtonText: 'Cool'
+})
   window.console.error(error);
 }), 500); 
       },searchCity2() {
@@ -290,6 +298,12 @@ setTimeout(() => departureGet()
   // this.isLoading = false
   // this.isLoading = false // JSON data parsed by `response.json()` call
   }).catch(function(error) {
+    Swal.fire({
+  title: 'Error!',
+  text: 'Do you want to continue'+error,
+  icon: 'error',
+  confirmButtonText: 'Cool'
+})
   window.console.error(error);
 }), 500); 
       },changed: function(event) {
@@ -342,7 +356,7 @@ this.searchObject = this.info2.find(isCherries);
 this.$store.commit('changePricing', this.searchObject);
 window.console.log(this.searchObject); 
 
-this.info3="";
+// this.info3="";
   // var duh=this;\
 
   var duh=   {
@@ -497,6 +511,8 @@ fligthConfirmationGet()
   }
 }
 
+this.showLoader(true)
+
 async function postBody() {
   // Default options are marked with *
   // const foo=this;
@@ -532,8 +548,34 @@ setTimeout(() => CreateOrder()
      this.$store.commit('change', json)
      router.push('result')
      this.showLoader(false)
+     
+         Swal.fire({
+  title: '<strong>Congratulation <u>your flight is confirmed</u></strong>',
+  icon: 'info',
+  html:
+    'You can use your confirmation number, ' +
+    // '<a href="//sweetalert2.github.io">links</a> ' +
+    'and enjoy your trip !',
+  showCloseButton: true,
+  showCancelButton: true,
+  focusConfirm: false,
+  confirmButtonText:
+    '<i class="fa fa-thumbs-up"></i> Great!',
+  confirmButtonAriaLabel: 'Thumbs up, great!',
+  cancelButtonText:
+    '<i class="fa fa-thumbs-down"></i>',
+  cancelButtonAriaLabel: 'Thumbs down'
+})
+
   // this.toggleInfo2=true;
   // this.isLoading = false   // JSON data parsed by `response.json()` call
+  }).catch(function(error){
+    Swal.fire({
+  title: 'Error!',
+  text: 'Do you want to continue'+error,
+  icon: 'error',
+  confirmButtonText: 'Cool'
+})
   }), 4000);
 
 

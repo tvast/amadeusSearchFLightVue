@@ -173,6 +173,9 @@ $white: grey;
 // import { store } from './store/store'
 import {BadgerAccordion, BadgerAccordionItem} from 'vue-badger-accordion'
   /* eslint-disable no-mixed-spaces-and-tabs */
+  import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+import 'sweetalert2/src/sweetalert2.scss'
 export default {
 data: function(){
     return {
@@ -201,9 +204,35 @@ data: function(){
         BadgerAccordionItem,
     },
   created :{
-
- 	
-  },
+    getInfo (){
+if(this.$store.getters.flavor.length < 1){
+      Swal.fire({
+  title: 'Error!',
+  text: 'Do you want to continue',
+  icon: 'error',
+  confirmButtonText: 'Cool'
+})
+    }
+ 	else {
+         Swal.fire({
+  title: '<strong>Congratulation <u>your flight is confirmed</u></strong>',
+  icon: 'info',
+  html:
+    'You can use your confirmation number, ' +
+    // '<a href="//sweetalert2.github.io">links</a> ' +
+    'and enjoy your trip !',
+  showCloseButton: true,
+  showCancelButton: true,
+  focusConfirm: false,
+  confirmButtonText:
+    '<i class="fa fa-thumbs-up"></i> Great!',
+  confirmButtonAriaLabel: 'Thumbs up, great!',
+  cancelButtonText:
+    '<i class="fa fa-thumbs-down"></i>',
+  cancelButtonAriaLabel: 'Thumbs down'
+})
+  }
+  }},
   methods: {
 
   
