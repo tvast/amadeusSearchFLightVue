@@ -66,6 +66,14 @@ Vue.use(new VueSocketIO({
     },
     //options: { path: "/my-app/" } //Optional options
 }))
+
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
+// Install BootstrapVue
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
+
 Vue.config.productionTip = false
 Vue.mixin({
   data: function(){

@@ -12,7 +12,8 @@ export const store = new Vuex.Store({
     pricing :'',
     chats : null,
     handle : "",
-    dataCitySearch:[]
+    dataCitySearch:[],
+    dataCitySearchArrival:[]
   },
   mutations: {
     change(state, flavor) {
@@ -33,7 +34,10 @@ export const store = new Vuex.Store({
     },
     dataCitySearchMute (state, dataCitySearch){
       state.dataCitySearch=dataCitySearch
-    }
+    },
+    dataCitySearchArrival (state, dataCitySearchArrival){
+      state.dataCitySearchArrival=dataCitySearchArrival
+    },
   },
   getters: {
     flavor: state => state.flavor,
@@ -43,10 +47,12 @@ export const store = new Vuex.Store({
     },
     HANDLE : state => {
       return state.handle
-    },
-    dataCitySearch : state => {
+    },dataCitySearch : state => {
       return state.dataCitySearch
-    }
+    },dataCitySearchArrival : state => {
+      return state.dataCitySearchArrival
+    },
+    
 
   },
    actions : {

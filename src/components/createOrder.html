@@ -110,8 +110,9 @@
     
     </div>
     <div class="locations to-location1">
-      <md-autocomplete @input="searchCity()" v-model="selectedCountryArrival" :md-options="countriesArrival">
+      <md-autocomplete @input="searchCity2()" v-model="selectedCountryArrival" :md-options="$store.getters.dataCitySearchArrival" @md-changed="getCountriesDeparture2" @md-selected="getSeletedItem2()">
       <label>Arrival</label>
+      <template slot="md-autocomplete-item" slot-scope="{ item, term }"> {{item.name}}--{{item.id}} </template>
     </md-autocomplete>
 
 <!--      <autocomplete

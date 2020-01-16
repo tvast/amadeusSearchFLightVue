@@ -161,6 +161,9 @@ methods: {
 	},getSeletedItem(){
     this.selectedCountryDeparture = this.selectedCountryDeparture.iataCode
   },
+  getSeletedItem2(){
+    this.selectedCountryArrival = this.selectedCountryArrival.iataCode
+  },
   getCountriesDeparture (searchTerm) {
         this.countries = new Promise(resolve => {
           window.setTimeout(() => {
@@ -168,6 +171,18 @@ methods: {
               resolve(this.countryList)
             } else {
               const term = searchTerm.toLowerCase()
+
+              resolve(this.countryList.filter(({ name }) => name.toLowerCase().includes(term)))
+            }
+          }, 500)
+        })
+      },getCountriesDeparture2 (searchTerm2) {
+        this.countries = new Promise(resolve => {
+          window.setTimeout(() => {
+            if (!searchTerm2) {
+              resolve(this.countryList)
+            } else {
+              const term = searchTerm2.toLowerCase()
 
               resolve(this.countryList.filter(({ name }) => name.toLowerCase().includes(term)))
             }
@@ -216,6 +231,58 @@ setTimeout(() => departureGet()
   .then((json) => {
     this.countryList=json.data;
     this.$store.commit('dataCitySearchMute', json.data)
+   // this.info2=json;
+   window.console.log(json.data)
+  // this.toggleInfo=true;
+  this.showLoader(false)
+  // this.isLoading = false
+  // this.isLoading = false // JSON data parsed by `response.json()` call
+  }).catch(function(error) {
+  window.console.error(error);
+}), 500); 
+      },searchCity2() {
+          this.showLoader(true)
+    var vm =this;
+  var urlSend= "keyword="+this.selectedCountryArrival
+  
+  window.console.log(urlSend);
+ 
+  async function postUrlEncoded() {
+  // Default options are marked with *
+ 
+  const response = await fetch("http://localhost:3000/citySearch?", {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      // 'Content-Type': 'application/json'   
+      'Content-Type': 'application/x-www-form-urlencoded',
+     },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *client
+    body: urlSend// body data type must match "Content-Type" header
+  });
+   // this.isLoading = true
+  return await response.json(); // parses JSON response into native JavaScript objects
+}
+
+postUrlEncoded().then((data) => {
+    window.console.log(data);
+    // this.info3=data // JSON data parsed by `response.json()` call
+  });
+async function departureGet() {
+
+  // Default options are marked with *
+  const response = await fetch(vm.localhost+"departureGet" );
+  // vm.isLoading = true
+  return await response.json(); // parses JSON response into native JavaScript objects
+}
+
+setTimeout(() => departureGet()
+  .then((json) => {
+    this.countryList=json.data;
+    this.$store.commit('dataCitySearchArrival', json.data)
    // this.info2=json;
    window.console.log(json.data)
   // this.toggleInfo=true;
