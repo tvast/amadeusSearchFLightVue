@@ -548,7 +548,7 @@ setTimeout(() => CreateOrder()
      this.$store.commit('change', json)
      router.push('result')
      this.showLoader(false)
-     
+
          Swal.fire({
   title: '<strong>Congratulation <u>your flight is confirmed</u></strong>',
   icon: 'info',
@@ -639,14 +639,51 @@ async function flightSearch() {
 
 setTimeout(() => flightSearch()
   .then((json) => {
-   this.info2=json;
+   this.info2=json.data;
    window.console.log(json)
   this.toggleInfo=true;
   this.showLoader(false)
+
+if(json.data.length < 2){
+Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Something went wrong!',
+  footer: '<a href>Why do I have this issue?</a>'
+})
+}
+
+else {
+  Swal.fire({
+  title: 'Wonderfull we find 50 travel matching your ressearch',
+  icon: 'info',
+  html:
+    'Choose one to confirm your price',
+    // '<a href="//sweetalert2.github.io">links</a> ' +
+    // 'and other HTML tags',
+  showCloseButton: true,
+  showCancelButton: true,
+  focusConfirm: false,
+  confirmButtonText:
+    '<i class="fa fa-thumbs-up"></i> Great!',
+  confirmButtonAriaLabel: 'Thumbs up, great!',
+  cancelButtonText:
+    '<i class="fa fa-thumbs-down"></i>',
+  cancelButtonAriaLabel: 'Thumbs down'
+})
+}
+
+
   // this.isLoading = false
   // this.isLoading = false // JSON data parsed by `response.json()` call
   }).catch(function(error) {
   window.console.error(error);
+  Swal.fire({
+  icon: 'error',
+  title: 'Oops...',
+  text: 'Something went wrong!',
+  footer: '<a href>Why do I have this issue?</a>'
+})
 }), 8000);
 
 
