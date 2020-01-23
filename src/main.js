@@ -92,6 +92,17 @@ Vue.mixin({
     showLoader: bool => {
       document.getElementById("loading").style.display = bool ? "block" : "none";
     },
+    getTime(input) {
+      // window.console.log(input)
+      var getTImeHour = input.split("T")
+      // window.console.log(getTImeHour)
+      return getTImeHour[1]
+    }, getduration(input) {
+      // window.console.log(input)
+      var getdurationtime = input.split("PT")
+      // window.console.log(getTImeHour)
+      return getdurationtime[0]
+    }
 
     
    }

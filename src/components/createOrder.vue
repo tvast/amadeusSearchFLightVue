@@ -1,7 +1,7 @@
 <template src="./createOrder.html"></template>
 
 
-<style src="./style.css"></style>
+<style lang="scss" src="./style.scss"></style>
 
 <script>
 import Swal from 'sweetalert2/dist/sweetalert2.js'
@@ -92,7 +92,7 @@ export default {
   'SYD',
   'BKK',
   ],
-  localhost: "http://localhost:3000/",
+  localhost: "https://shielded-depths-64980.herokuapp.com/",
   info:{},
   info2:{},
   info3:{},
@@ -200,7 +200,7 @@ methods: {
   async function postUrlEncoded() {
   // Default options are marked with *
  
-  const response = await fetch("http://localhost:3000/citySearch?", {
+  const response = await fetch("https://shielded-depths-64980.herokuapp.com/citySearch?", {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -258,7 +258,7 @@ setTimeout(() => departureGet()
   async function postUrlEncoded() {
   // Default options are marked with *
  
-  const response = await fetch("http://localhost:3000/citySearch?", {
+  const response = await fetch("https://shielded-depths-64980.herokuapp.com/citySearch?", {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -317,7 +317,40 @@ setTimeout(() => departureGet()
 			}
 		}
 	},   show () {
-    this.$modal.show('hello-world');
+
+    Swal.fire({
+  title: "Insert your email",
+  text: 'hello@something.com',
+  input: 'text',
+  showCancelButton: true,
+  closeOnConfirm: false,
+  preConfirm: (inputValue) => {
+   var vm=this 
+    vm.getFLightPrice(inputValue);
+  },
+  });
+    // this.$modal.show('hello-world');
+//     Swal.fire({
+//   title: 'Submit your Github username',
+//   html: "<form @submit.prevent='validateUser'><input placeholder='Name' v-model='form.firstName' type='text'><input placeholder='Last name' v-model='form.lastName' type='text'><input placeholder='Email' v-model='form.email' type='email'><md-button v-mojs='mojsOptions' @click='getFLightPrice()' class='md-primary'>Confirm order</md-button></form>",
+//   inputAttributes: {
+//     autocapitalize: 'off'
+//   },
+//   showCancelButton: true,
+//   confirmButtonText: 'Look up',
+//   showLoaderOnConfirm: true,
+//   preConfirm: () => {
+//     this.validateuser()
+//   },
+//   // allowOutsideClick: () => !Swal.isLoading()s
+// }).then((result) => {
+//   if (result.value) {
+//     Swal.fire({
+//       title: `${result.value.login}'s avatar`,
+//       imageUrl: result.value.avatar_url
+//     })
+//   }
+// })
   },
   hide () {
     this.$modal.hide('hello-world');
@@ -516,7 +549,7 @@ this.showLoader(true)
 async function postBody() {
   // Default options are marked with *
   // const foo=this;
-  const response = await fetch("http://localhost:3000/"+"flightCreateOrder", {
+  const response = await fetch("https://shielded-depths-64980.herokuapp.com/"+"flightCreateOrder", {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
@@ -538,13 +571,14 @@ async function CreateOrder() {
   // Default options are marked with *
   // this.isLoading = true
   // const bar=this;
-  const response = await fetch("http://localhost:3000/"+"flightcretaeorderget" );
+  const response = await fetch("https://shielded-depths-64980.herokuapp.com/"+"flightcretaeorderget" );
   return await response.json(); // parses JSON response into native JavaScript objects
 }
 
 setTimeout(() => CreateOrder()
   .then((json) => {
      this.info3=json;
+     window.console.log(json)
      this.$store.commit('change', json)
      router.push('result')
      this.showLoader(false)

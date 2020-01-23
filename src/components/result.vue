@@ -4,171 +4,578 @@
 <style scoped lang="scss">
 
 
-$blue: #3EA5EA;
-$grey: #CACDDA;
-$light-grey: #EEEEEE;
-$white: grey;
 
-.tix-container {
-  background-color: $white;
-  border-radius: 14px;
-  box-shadow: 10px 10px 23px 0px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
-  height: 250px;
-  width: 600px;
+$spacingV : 10px;
+$spacingH : 10px;
+$bradius : 10px;
+
+.displayflex {
+  display : flex;
 }
 
-.tix-upper {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: row;
-  margin-top: 25px;
-  overflow: hidden;
+// Media queries 
+
+@mixin bp($point) {
+  @if $point == mobile {
+      @media (max-width: 500px)  { @content ; }
+  }
+  @else if $point == ipadV {
+      @media (min-width: 501px) and (max-width:1023px) { @content ; }
+  }
+  @else if $point == ipadVMore {
+      @media (min-width: 501px) { @content ; }
+  }
+  @else if $point == ipadHmore {
+      @media (min-width: 1024px) { @content ; }
+  }
 }
 
-.tix-upper-left {
-  display: flex;
-  flex: 0 1 auto;
-  flex-direction: column;
-  left: -6px;
-  position:relative;
+
+// A bit of styling 
+
+$text: #000000  ;
+$orange: blue;
+$label:#989898;
+$bgc:#f9ebd2;
+
+@mixin object-fit($fit: fill, $position: null){
+  -o-object-fit: $fit;
+     object-fit: $fit;
+  @if $position {
+    -o-object-position: $position;
+       object-position: $position;
+    font-family: 'object-fit: #{$fit}; object-position: #{$position}';
+  } @else {
+    font-family: 'object-fit: #{$fit}';
+  }
 }
 
-.tix-date {
-  color: $blue;
-  font-size: 70px;
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600');
+
+$fm: 'Montserrat', Helvetica, arial, sans-serif;
+
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: $fm;
+    letter-spacing:0.75px;
+    color:$text;
+    background-color: $bgc;
+    font-size: 16px;
+}
+
+
+h1,h2,h3,h4,h5,h6,p {
+    margin:0;
+    padding:0;
+    font-weight: 400;
+    font-size: 1.2em;
+}
+
+h1 {
   font-weight: 600;
-  letter-spacing: 2px;
-  margin: 0px;
+  font-size: 2em;
 }
 
-.tix-time-container {
+h2 {
+  color: $orange;
+  font-size: 2rem;
+}
+
+h4, h5 {
+  color: $label;
+  font-size: 0.8rem;
+}
+
+h6 {
+  font-size: 1.6rem;
+}
+
+p {
+    letter-spacing: 1px;
+    color :white 
+}
+
+.white p{
+    letter-spacing: 1px;
+    color :blue 
+}
+
+img {
+    max-width:100%;
+    height:auto;
+    max-height: 100%;
+}
+
+section, header {
+
   display: flex;
-  flex-direction: row;
-}
+  background-color: white;
+  & > div, {
 
-.tix-time {
-  font-size: 30px;
-  font-weight: 300;
-  margin: 0px;
-}
-
-.tix-date-time {
-  color: $grey;
-  font-size: 12px;
-  margin: 0px;
-  margin-left: auto;
-}
-
-.tix-upper-middle {
-  flex: 1 1 auto;
-  margin-left: 6px;
-}
-
-.tix-to-from-small {
-  color: $grey;
-  font-size: 12px;
-  margin: 0px;
-}
-
-.tix-to-from-large {
-  font-size: 40px;
-  margin: 0px;
-}
-
-.tix-upper-right {
-
-}
-
-.tix-plane {
-  color: $light-grey;
-  font-size: 60px;
-  margin-right: 20px;
-  margin-top: 4px;
-}
-
-.tix-lower {
-  background-image: url('http://www.swissarmylibrarian.net/wp-content/uploads/2011/02/barcodelunch.png');
-  background-position: 0 -12px;
-  background-size: auto 110px;
-  border-radius: 0px 0px 30px 14px;
-  box-shadow: inset 0px 67px 16px -64px rgba(0,0,0,1);
-  color: $white;
-  height: 80px;
-  width: 100%;  
-}
-
-.tix-lower-overlay {
-  background-color: rgba(255, 255, 255, 0.7);
-  border-radius: 0px 0px 30px 14px;
-  display: flex;
-  flex-direction: row;
-  height: 100%;
-  width: 100%;
-}
-
-.tix-lower-info-container {
-  border-radius: 0px 0px 20px 0px;
-  display: flex;
-  flex-direction: row;
-  margin-left: auto;
-}
-
-.tix-lower-triangle {
-  border-style: solid;
-  border-width: 0 50px 80px 0;
-  border-color: transparent $blue transparent transparent;
-  display: inline-block;
-  height: 0;
-  width: 0;
-}
-
-.tix-lower-triangle::before {
-  background-color: transparent;
-  box-shadow: -10px 20px 30px -2px rgba(0,0,0,0.1);
-  content: '';
-  position: absolute;
-  height: 80px;
-  width: 50px;
-  transform: skewX(33deg);
-  margin-left: 24px;
-}
-
-.tix-lower-triangle-blue-background {
-  background-color: $blue;
-}
-
-.tix-lower-container {
-  background-color: $blue;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 10px;
-}
-
-.tix-lower-title {
-  font-size: 12px;
-  margin: 0px;
-}
-
-.tix-lower-number {
-  font-size: 26px;
-  font-weight: 300;
-  margin: 0px;
-}
-
-.tix-gate-container {
   
+  }
 }
 
-.tix-flight-container {
-  
+header {
+  > div {
+    min-width: 200px;
+  }
 }
 
-.tix-seat-container {
-  border-radius: 0px 0px 14px 0px;
-}</style>
+.flight {
+  &--general {
+    text-align: center;
+    align-items: center;
+    div {
+      &:first-of-type, &:last-of-type {
+        flex:1 50%;
+      }
+      &:first-child {
+        padding: $spacingV $spacingH ;
+      }
+    }
+  }
+  &--qrcode {
+    justify-content: center;
+    align-items: center;
+
+        height: 30vh;
+    img{
+      @include object-fit(contain);
+      height: 100%;
+    }
+  }
+}
+
+.extra {
+  &--meteo {
+    p:last-of-type {
+      font-size: 0.8rem;
+    }
+  }
+  &--image {
+    height: 100%;
+    display: block;
+    padding: 0;
+    img {
+      @include object-fit(cover);
+      max-height: 100%;
+      min-width: 100%;
+    }
+  }
+}
+
+
+header {
+    background-color: $orange;
+    color: $bgc;
+    justify-content: flex-end;
+    align-items: center;
+    h1 {
+      flex:1 90%;
+    }
+    h5 {
+      color: $bgc;
+    }
+    > div {
+      flex: 1 10%;
+      &:first-of-type {
+        padding-left: 0;
+      }
+    }
+}
+
+@include bp(mobile){
+  section, header  {
+    padding: $spacingV  $spacingH*2;
+  }
+  header {
+    flex-wrap:wrap;
+  }
+
+  .flight--qrcode{
+  }
+  .extra--image {
+      min-height: inherit;
+  }
+
+
+  .flight {
+    &--general {
+      display: -webkit-flex;
+      display: -ms-flex;
+      display: flex;
+      align-items: center;
+      div {
+        &:first-of-type {
+          text-align: left;
+          padding-left: 0;
+        }
+        &:last-of-type {
+          text-align: right;
+          padding-right: 0;
+        }
+      }
+    }
+  }
+  .extra {
+    &--meteo {
+      flex-direction: column;
+      > div {
+        width: 100%;
+        padding-left:0;
+      }
+    }
+    &--image {
+      img {
+        height: auto;
+        max-height: -webkit-fill-available;
+      }
+    }
+  }
+}
+
+
+@include bp(ipadVMore){
+  section , h1, header div:first-of-type {
+    
+  }
+
+  .flight--general{
+    padding-bottom:0  ;
+  }
+
+  .flight--TimeInfo {
+    padding-top:0  ;
+  }
+
+  .flight--qrcode {
+    padding: 0 $spacingV ;
+  }
+
+  .extra {
+    &--meteo {
+      justify-content: space-around;
+      > div {
+        max-width: 30%;
+        &:last-of-type {
+          padding-right: 0;
+        }
+      }
+    }
+  }
+
+}
+
+
+
+@include bp(ipadHmore){
+  .flight--TimeInfo {
+    padding-top: $spacingV;
+  }
+  .flight--qrcode {
+    padding: 0 $spacingV ;
+  }
+}
+
+
+
+
+main {
+  display: grid;
+  display: block\9;
+  max-width: 500px\9;
+  margin: 0 auto;
+}
+
+
+
+//border radius
+header {
+  border-radius: $bradius $bradius 0 0;
+  @include bp(mobile){
+    border-radius:0;
+  }
+}
+.flight {
+  &--qrcode {
+    border-radius: 0 0 $bradius  0;
+
+    @include bp(mobile){
+      border-radius:0;
+    }
+  }
+  &--general  {
+    border-radius: 0 0 0 $bradius;
+  }
+}
+.extra {
+  &--meteo {
+    border-radius: 10px;
+  }
+  &--image {
+    display: flex;
+    img {
+      //height:100%;
+    }
+  }
+}
+@include bp(ipadV){
+  .flight {
+    &--TimeInfo {
+      border-radius: 0 0 0 $bradius;
+    }
+    &--general  {
+      border-radius: 0;
+    }
+    &--qrcode {
+      justify-content: flex-end;
+    }
+  }
+}
+@include bp(ipadVMore){
+  main {
+    height: 100vh;
+  }
+  .flight {
+    &--qrcode {
+      height: 100%;
+      padding: 0;
+    }
+  }
+  .extra {
+    &--image {
+      min-height: 100vh;
+    }
+  }
+}
+
+@supports (display: grid) {
+  @include bp(ipadVMore){
+    .flight {
+      &--qrcode {
+        height: initial;
+      }
+    }
+  }
+}
+
+@supports  not (display: grid) {
+  main {
+    margin: 0 auto;
+    max-width: 500px;
+    grid-gap: 0 0;
+    display: block;
+  }
+  //border radius
+  header {
+    border-radius: 0;
+    @include bp(mobile){
+      border-radius:0;
+    }
+  }
+
+  .flight {
+    &--qrcode {
+      border-radius: 0;
+
+      @include bp(mobile){
+        border-radius:0;
+      }
+    }
+    &--general  {
+      border-radius: 0;
+    }
+  }
+  .extra {
+    &--meteo {
+      border-radius: 0;
+    }
+    &--image {
+      min-height: inherit;
+      display: block;
+    }
+  }
+  @include bp(ipadV){
+    .flight {
+      &--TimeInfo {
+        border-radius: 0;
+      }
+      &--general  {
+        border-radius: 0;
+      }
+      &--qrcode {
+        justify-content: center;
+      }
+    }
+  }
+  @include bp(ipadVMore){
+    main {
+      height: inherit;
+    }
+    .flight {
+      &--qrcode {
+        height: initial;
+      }
+    }
+    .extra {
+      &--image {
+        min-height: inherit;
+      }
+    }
+  }
+}
+
+
+
+
+.extra {
+  &--image {
+  }
+  &--meteo {
+    z-index: 2;
+    @include bp(ipadVMore){
+      justify-self: center;
+    }
+  }
+
+}
+
+@include bp(mobile){
+  main {
+    grid-template-columns: 1fr  1fr;
+  }
+  header {
+    grid-column: 1 / span 2;
+    grid-row: 1 / span 1;
+  }
+  .flight {
+    &--general, &--TimeInfo , &--PassInfo, &--qrcode {
+      grid-column: 1 / span 2;
+    }
+    &--general {
+      grid-row: 2 / span 1;
+    }
+    &--TimeInfo {
+      grid-row: 3 / span 1;
+    }
+    &--PassInfo {
+      grid-row: 4 / span 1;
+    }
+    &--qrcode {
+      grid-row: 5 / span 1;
+    }
+  }
+  .extra {
+    &--meteo, &--image {
+      grid-row: 6 / span 1;
+    }
+    &--meteo {
+      grid-column: 1 / span 1;
+    }
+    &--image {
+      grid-column: 2 / span 1;
+    }
+  }
+}
+
+
+
+@include bp(ipadV){
+  main {
+    grid-template-columns: 1fr repeat(3, minmax(100px, 200px)) 1fr;
+    grid-template-rows: 1fr 60px repeat(3, 75px) 10vh auto 1fr ;
+  }
+  header {
+      grid-column: 2 / span 3;
+      grid-row: 2 / span 1;
+      z-index: 2;
+  }
+
+  .flight {
+   &--PassInfo, &--qrcode {
+      z-index: 2;
+    }
+    &--general {
+      grid-column: 2 / span 2;
+      grid-row: 3 / span 1;
+      z-index: 3;
+    }
+    &--TimeInfo {
+      grid-column: 2 / span 2;
+      grid-row: 5 / span 1;
+      z-index: 3;
+    }
+    &--PassInfo {
+      grid-column: 2 / span 2;
+      grid-row: 4 / span 1;
+    }
+    &--qrcode {
+      grid-column: 4 / span 1;
+      grid-row: 3 / span 3;
+    }
+  }
+  .extra {
+    &--meteo {
+      grid-column: 2 / span 3;
+      grid-row: 7 / span 1;
+    }
+    &--image {
+      grid-column: 1 / span 7;
+      grid-row: 1 / span 8;
+    }
+  }
+}
+
+
+@include bp(ipadHmore){
+  main {
+    grid-template-columns: 1fr repeat(4, 150px) 250px 1fr;
+    grid-template-rows: 1fr 60px repeat(2, 100px)  0.5fr auto  1fr;
+  }
+  header {
+      grid-column: 2 / span 5;
+      grid-row: 2 / span 1;
+      z-index: 2;
+  }
+  .flight {
+    &--general, &--TimeInfo , &--PassInfo, &--qrcode {
+      z-index: 2;
+    }
+    &--general {
+      grid-column: 2 / span 2;
+      grid-row: 3 / span 2;
+    }
+    &--TimeInfo {
+      grid-column: 4 / span 2;
+      grid-row: 3 / span 1;
+    }
+    &--PassInfo {
+      grid-column: 4 / span 2;
+      grid-row: 4 / span 1;
+    }
+    &--qrcode {
+      grid-column: 6 / span 1;
+      grid-row: 3 / span 2;
+    }
+  }
+  .extra {
+
+    &--meteo {
+      grid-column: 2 / span 5;
+      grid-row: 6 / span 1 ;
+    }
+    &--image {
+      grid-column: 1 / span 7;
+      grid-row: 1 / span 7;
+      z-index: 1;
+    }
+  }
+}
+
+</style>
 <script>
 // import { store } from './store/store'
 import {BadgerAccordion, BadgerAccordionItem} from 'vue-badger-accordion'
